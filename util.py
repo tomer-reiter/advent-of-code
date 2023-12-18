@@ -13,3 +13,21 @@ def add_tuples(tuple_1, tuple_2):
         return None
     else:
         return tuple(map(lambda i, j: i + j, tuple_1, tuple_2))
+    
+def scalar_multiply(n, t):
+    return tuple(map(lambda x: n * x, t))
+
+# Requires that grid is a 2d array type with equal length rows
+def is_in_bounds(r, c, grid):
+    return 0 <= r < len(grid) and 0 <= c < len(grid[0])
+
+DIRECTION_VECTORS = {
+    "N": (-1, 0),
+    "S": (1, 0),
+    "E": (0, 1),
+    "W": (0, -1),
+    "U": (-1, 0),
+    "D": (1, 0),
+    "R": (0, 1),
+    "L": (0, -1),
+}

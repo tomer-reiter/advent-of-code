@@ -4,20 +4,10 @@ from util import *
 sample_input = get_list_of_strings("sample_input_puzzle_17.txt")
 input = get_list_of_strings("input_puzzle_17.txt")
 
-direction_vector = {
-    "N": (-1, 0),
-    "S": (1, 0),
-    "E": (0, 1),
-    "W": (0, -1),
-}
-
-other = {
+opposite_directions = {
     "NS": "EW",
     "EW": "NS",
 }
-
-def is_in_bounds(r, c, grid):
-    return 0 <= r < len(grid) and 0 <= c < len(grid)
 
 # This an implementation of Dijkstra's algorithm. Instead of storing a graph,
 # it's stored implicitly via the grid. Vertices are of the form i, j, directions,
@@ -37,13 +27,13 @@ def find_min_path(grid, min_move, max_move):
     target_1, target_2 = (target_r, target_c, "NS"), (target_r, target_c, "EW")
     while not (target_1 in visited and target_2 in visited):
         r, c, d_old = min([x for x in seen if not x in visited], key=(lambda x: distances[x]))
-        other_directions = other[d_old]
+        other_directions = opposite_directions[d_old]
         for d in other_directions:
             for n in range(min_move, max_move + 1):
                 this_path_value = 0
                 new_r, new_c = r, c
                 for i in range(n):
-                    new_r, new_c = add_tuples((new_r, new_c), direction_vector[d])
+                    new_r, new_c = add_tuples((new_r, new_c), DIRECTION_VECTORS[d])
                     if is_in_bounds(new_r, new_c, grid):
                         this_path_value += int(grid[new_r][new_c])
                 if is_in_bounds(new_r, new_c, grid):
